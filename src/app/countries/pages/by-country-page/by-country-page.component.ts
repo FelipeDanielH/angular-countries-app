@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Country } from '../../interfaces/country';
+import { Country } from '../../interfaces/country.interface';
 import { CountriesService } from '../../services/countries.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class ByCountryPageComponent {
 
   public countries: Country[] = []
   public isLoading: boolean = false
+  public initialValue: string = ''
 
   constructor(private countriesService: CountriesService) { }
 
@@ -22,5 +23,10 @@ export class ByCountryPageComponent {
         this.countries = countries
         this.isLoading = false
       })
+  }
+
+  ngOnInit(): void {
+    this.countries = this.countriesService.cacheStore.byCountries.countries
+    this.initialValue = this.countriesService.cacheStore.byCountries.term
   }
 }
